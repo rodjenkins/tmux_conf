@@ -35,18 +35,21 @@ tmux source-file ~/.tmux.conf
 | `C-a` `\|` / `-` | Split horizontal / vertical |
 | `C-a` `c` | New window (current path) |
 | `C-a` `r` | Reload config |
-| `C-a` `m` | Toggle mouse (off → terminal-native select works) |
+| `C-a` `m` | Toggle mouse (default **off**; on = wheel scroll / pane click) |
 | `C-a` `[` | Copy mode (vi keys; `v` select, `y` yank) |
-| **Shift+drag** | Terminal-native copy while mouse is on |
+| **Shift+drag** | Terminal-native copy while mouse is **on** |
 
 ### Copy / paste
 
-With `mouse on`, a normal drag is handled by **tmux**, not the outer terminal — so OS clipboard paste can feel “broken.”
+**Default: mouse off** — highlight with the mouse and use your terminal’s normal copy (Cmd/Ctrl+C). That is the reliable path over SSH.
 
-- **Shift+drag** (or Option/Alt+drag in some macOS terminals): select for the outer terminal’s copy
-- **Mouse drag** then release: copy into tmux buffer; with OSC 52, also the system clipboard if your client allows it
-- **`C-a m`**: turn mouse off temporarily for normal select/copy
-- **Paste into tmux:** usually middle-click or terminal paste (`Cmd/Ctrl+V`) still works; if not, `C-a ]` pastes tmux buffer
+When mouse is **on** (`C-a m`):
+
+- Tmux owns the mouse; a plain drag does **not** fill the OS clipboard unless OSC 52 is allowed by the client (often blocked).
+- Use **Shift+drag** (macOS Terminal/iTerm often: **Option/Alt+drag** instead) for terminal-native select.
+- Or `C-a m` again to turn mouse off, then select normally.
+
+Paste into the session: terminal paste (Cmd/Ctrl+V). tmux buffer paste: `C-a ]`.
 
 ## Files
 
